@@ -16,6 +16,7 @@ const lossesEl = document.getElementById('losses');
 const winsEl = document.getElementById('wins');
 
 // initialize state
+
 const hidingPlaces = ['tree', 'shed', 'boulder'];
 
 let correctGuesses = 0;
@@ -40,14 +41,22 @@ boulderButton.addEventListener('click', () => {
 });
 
 function handleGuess(correctSpot, userGuess) {
+    boulderContainer.classList.remove('face');
+    treeContainer.classList.remove('face');
+    shedContainer.classList.remove('face');
+    console.log('correctSpot', correctSpot);
+
+
+    if (correctSpot === 'tree') {
+        treeContainer.classList.add('face');
+    } else if (correctSpot === 'shed') {
+        shedContainer.classList.add('face');
+    } else if (correctSpot === 'boulder') {
+        boulderContainer.classList.add('face');
+    }
+
     totalGuesses++;
     totalEl.textContent = totalGuesses;
-
-    const randomIndex = Math.floor(Math.random() * hidingPlaces.length);
-
-    const randomGuessEmoji = hidingPlaces[randomIndex];
-
-    
 
     if (correctSpot === userGuess) {
         winsEl.textContent++;
