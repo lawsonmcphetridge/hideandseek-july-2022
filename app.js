@@ -7,6 +7,10 @@ const shedContainer = document.getElementById('shed-container');
 const treeContainer = document.getElementById('tree-container');
 const boulderContainer = document.getElementById('boulder-container');
 
+const hidingTree = document.getElementById('tree-container');
+const hidingBoulder = document.getElementById('boulder-container');
+const hidingShed = document.getElementById('shed-container');
+
 const totalEl = document.getElementById('total');
 const lossesEl = document.getElementById('losses');
 const winsEl = document.getElementById('wins');
@@ -36,8 +40,21 @@ boulderButton.addEventListener('click', () => {
 });
 
 function handleGuess(correctSpot, userGuess) {
-    // reset the styles
-    // then increment the guesses
+    totalGuesses++;
+    totalEl.textContent = totalGuesses;
+
+    const randomIndex = Math.floor(Math.random() * hidingPlaces.length);
+
+    const randomGuessEmoji = hidingPlaces[randomIndex];
+
+    
+
+    if (correctSpot === userGuess) {
+        winsEl.textContent++;
+    } else {
+        lossesEl.textContent++;
+    }
+
     // then grab the appropriate container element for the correct guess from the DOM
     // then add the face class to that element so that the face shows up
     // then if the user guess is correct, increment the correct guesses
