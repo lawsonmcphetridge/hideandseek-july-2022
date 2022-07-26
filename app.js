@@ -6,10 +6,9 @@ const boulderButton = document.getElementById('boulder-button');
 const shedContainer = document.getElementById('shed-container');
 const treeContainer = document.getElementById('tree-container');
 const boulderContainer = document.getElementById('boulder-container');
+const tryAgainButton = document.getElementById('try-again-button');
 
-const hidingTree = document.getElementById('tree-container');
-const hidingBoulder = document.getElementById('boulder-container');
-const hidingShed = document.getElementById('shed-container');
+const resetButton = document.getElementById('reset-button');
 
 const totalEl = document.getElementById('total');
 const lossesEl = document.getElementById('losses');
@@ -19,8 +18,15 @@ const winsEl = document.getElementById('wins');
 
 const hidingPlaces = ['tree', 'shed', 'boulder'];
 
-let correctGuesses = 0;
 let totalGuesses = 0;
+let wins = 0;
+let losses = 0;
+
+function hideEmoji() {
+    boulderContainer.classList.remove('face');
+    treeContainer.classList.remove('face');
+    shedContainer.classList.remove('face');
+}
 
 shedButton.addEventListener('click', () => {
     const hidingSpot = Math.floor(Math.random() * 3);
@@ -41,11 +47,8 @@ boulderButton.addEventListener('click', () => {
 });
 
 function handleGuess(correctSpot, userGuess) {
-    boulderContainer.classList.remove('face');
-    treeContainer.classList.remove('face');
-    shedContainer.classList.remove('face');
-    console.log('correctSpot', correctSpot);
-
+    hideEmoji();
+    totalGuesses++;
 
     if (correctSpot === 'tree') {
         treeContainer.classList.add('face');
@@ -55,17 +58,33 @@ function handleGuess(correctSpot, userGuess) {
         boulderContainer.classList.add('face');
     }
 
-    totalGuesses++;
     totalEl.textContent = totalGuesses;
 
     if (correctSpot === userGuess) {
-        winsEl.textContent++;
+        wins++;
     } else {
-        lossesEl.textContent++;
+        losses++;
     }
+
+    lossesEl.textContent = losses;
+    winsEl.textContent = wins;
 
     // then grab the appropriate container element for the correct guess from the DOM
     // then add the face class to that element so that the face shows up
     // then if the user guess is correct, increment the correct guesses
     // update the DOM to show this change to the user (including the losses, not tracked directly in state)
 }
+
+resetButton.addEventListener('click', () => {
+    totalGuesses = 0;
+    wins = 0;
+    losses = 0;
+    lossesEl.textContent = 0;
+    winsEl.textContent = 0;
+    totalEl.textContent = 0;
+    hideEmoji();
+});
+
+tryAgainButton.addEventListener('click', () => {
+    hideEmoji();
+})
